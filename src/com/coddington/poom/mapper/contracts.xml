@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="contracts">
+
+
+	<select id="selectListByServiceNo" parameterType="Contract" resultType="Contract">
+		  SELECT no, giver_no giverNo, taker_no takerNo, service_no serviceNo, poom, status, 
+		  content, score_user scoreUser, 
+		  score_price scorePrice, score_kind scoreKind, score_knowhow scoreKnowhow, score_honest scoreHonest, 
+		  regdate
+		  FROM contracts
+		  WHERE service_no=#{serviceNo} AND status=#{status}
+	</select>
+	
+	<select id="selectContractList" parameterType="map" resultType="Contract" >
+		SELECT c.no no, u1.no giverNo, u1.nick_name giverNickname, u1.photo_url giverProfile, 
+			   u2.no takerNo, u2.nick_Name takerNickname, u2.photo_url takerProfile, c.service_no serviceNo, c.poom poom,
+			   c.status status, c.score_user scoreUser, c.score_price scorePrice, c.score_kind scoreKind,
+			   c.score_knowhow scoreKnowhow, c.score_honest scoreHonest, c.area1 area1, c.area2 area2,
+			   c.detail_address1 detailAddress1, c.detail_address2 detailAddress2, c.latitude latitude,
+			   c.longitude longitude, c.content content, c.regdate regdate
+		FROM contracts c, users u1, users u2
+		WHERE c.giver_no = u1.no 
+			  AND c.taker_no = u2.no
+			  AND (u1.no = #{userNo} or u2.no = #{userNo})
+			  AND c.service_no = #{cardNo}
+		      AND c.status = #{contractStatus}
+        ORDER BY c.regdate DESC
+	</select>
+	  
+	<update id="updateContractStatus" parameterType="map">
+		UPDATE contracts
+		SET status = #{status}
+		WHERE no = #{contractNo}
+	</update>
+	
+	<delete id="deleteContract" parameterType="int">
+		DELETE contracts
+		WHERE no = #{contractNo}
+	</delete>
+	
+	<insert id="updateScoreFromTaker" parameterType="Contract">
+		UPDATE contracts
+		SET score_price = #{scorePrice},
+			score_kind = #{scoreKind},
+			score_knowhow = #{scoreKnowhow},
+			score_honest = #{scoreHonest}
+		WHERE no = #{no}
+	</insert>
+	
+	<insert id="updateScoreFromGiver" parameterType="Contract">
+		UPDATE contracts
+		SET score_user = #{scoreUser}
+		WHERE no = #{no}
+	</insert>
+
+	<select id="selectScoreAndCountByServiceNo" parameterType="int" resultType="com.coddington.poom.util.CamelHashMap">
+		SELECT (CASE WHEN count_done > 0 THEN (score_user / count_done * 100) ELSE 0 END) score_taker, 
+		       (CASE WHEN count_done > 0 THEN ((score_price + score_kind + score_knowhow + score_honest) / (4 * count_done) * 100) ELSE 0 END) score_giver,
+		       (CASE WHEN count_done > 0 THEN (score_price / count_done * 100) ELSE 0 END) score_price, 
+		       (CASE WHEN count_done > 0 THEN (score_kind  / count_done * 100) ELSE 0 END) score_kind, 
+		       (CASE WHEN count_done > 0 THEN (score_knowhow / count_done * 100) ELSE 0 END) score_knowhow, 
+		       (CASE WHEN count_done > 0 THEN (score_honest / count_done * 100) ELSE 0 END) score_honest,        
+		        count_wait, 
+		        count_progress, 
+		        count_denied, 
+		        count_stop, 
+		        count_done
+		FROM(SELECT
+		    COUNT(CASE WHEN c.status = 9 AND c.score_user = 1 THEN 1 END) AS score_user,
+		    COUNT(CASE WHEN c.status = 9 AND c.score_price = 1 THEN 1 END) AS score_price,
+		    COUNT(CASE WHEN c.status = 9 AND c.score_kind = 1 THEN 1 END) AS score_kind,
+		    COUNT(CASE WHEN c.status = 9 AND c.score_knowhow = 1 THEN 1 END) AS score_knowhow,
+		    COUNT(CASE WHEN c.status = 9 AND c.score_honest = 1 THEN 1 END) AS score_honest,
+		    COUNT(CASE WHEN c.status = 0 THEN 1 END) count_wait,
+		    COUNT(CASE WHEN c.status = 1 THEN 1 END) count_progress,
+		    COUNT(CASE WHEN c.status = 4 THEN 1 END) count_denied,
+		    COUNT(CASE WHEN c.status = 5 THEN 1 END) count_stop,
+		    COUNT(CASE WHEN c.status = 9 THEN 1 END) count_done
+		    FROM 
+		    services s, contracts c
+		    WHERE s.no = c.SERVICE_NO
+		    AND s.no = #{s.no})
+	</select>
+	
+	<insert id="insert" parameterType="Contract">	
+		INSERT INTO contracts (no, giver_no, taker_no, service_no, poom, status, content, 
+			score_user, score_price, score_kind, score_knowhow, score_honest,
+			area1, area2, detail_address1, detail_address2, latitude, longitude, regdate)
+		VALUES (contracts_seq.nextval, #{giverNo}, #{takerNo}, #{serviceNo}, #{poom}, 0, #{content},
+		0, 0, 0, 0, 0,
+		'', '', '', '', '', '', systimestamp)
+		<selectKey keyProperty="no" resultType="Integer" order="AFTER">
+			SELECT contracts_seq.currval FROM dual
+		</selectKey>
+	</insert>
+ 
+</mapper>

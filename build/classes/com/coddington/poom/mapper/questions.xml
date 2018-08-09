@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="questions">
+
+	<select id="selectList" parameterType="Map" resultType="Question">
+        SELECT	no, serviceNo, userNo, type, content, reply, regdate, userNickName, userPhotoUrl
+        FROM(SELECT no, serviceNo, userNo, type, content, reply, regdate, userNickName, userPhotoUrl, rownum r
+        	FROM(SELECT q.no, q.service_no serviceNo, q.user_no userNo, q.type, q.content, q.reply, q.regdate, u.nick_name userNickName, u.photo_url userPhotoUrl
+            	FROM questions q, users u
+            	WHERE q.user_no = u.no 
+            	AND q.service_no = #{serviceNo}
+            	ORDER BY q.regdate DESC))
+        WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Question">
+		SELECT q.no, q.service_no serviceNo, q.user_no userNo, q.type, q.content, q.reply, q.regdate, u.nick_name userNickName, u.photo_url userPhotoUrl
+		FROM questions q, users u
+		WHERE q.user_no = u.no 
+		AND q.no = #{no}		
+	</select>
+ 
+	<select id="selectCountTotal" parameterType="int" resultType="int">
+		SELECT count(no) 
+		FROM questions
+		WHERE service_no = #{serviceNo}
+	</select>
+
+	<insert id="insert" parameterType="Question">
+		INSERT INTO questions (no, service_no, user_no, type, content, reply, regdate)
+		VALUES (questions_seq.nextval, #{serviceNo}, #{userNo}, #{type}, #{content}, #{reply}, systimestamp)
+	</insert>
+	
+	<update id="update" parameterType="Question">
+		UPDATE questions SET type = #{type}, content = #{content}, reply = #{reply}
+		WHERE no= #{no}		
+	</update>
+	
+</mapper>

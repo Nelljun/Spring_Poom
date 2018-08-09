@@ -1,0 +1,158 @@
+.popup_bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    font: 600 20px 'Noto Sans KR', sans-serif;
+    z-index: 9998;
+    overflow: auto;
+}
+
+#detailContractPopup {
+	color: #1f2b43;
+    width: 380px;
+    padding: 20px 10px 10px 10px;
+    min-height: 100px;
+    background-color: lightgrey;
+    position: fixed;
+    left: 50%;
+    margin-top: 20px;
+    margin-left: -190px;
+    z-index: 9999;
+    oveflow: hidden;
+}
+
+#detailContractPopup dl {
+    width: 320px;
+    min-height: 100px;
+    margin: auto;
+    /*background-color: blue;*/
+    overflow: hidden;
+   
+
+}
+
+#detailContractPopup dl>dd {
+    width: 170px;
+    float: right;
+    /*background-color: pink;*/
+    /*outline: 1px #424242 solid;*/
+    text-align: left;
+    padding-left: 50px;
+}
+
+#detailContractPopup dl>dt {
+	float: left;
+    height: 60px;
+    width: 100px;
+    color: #1f2b43;
+  	text-align: center;
+    font-size: 18px;
+    line-height: 60px;
+    /*background-color: lightpink;*/
+   /*outline: 1px #424242 solid;*/
+}
+#detailContractPopup dl>dt.info_schedule {
+	height: 20px;
+	line-height: 20px;
+}
+
+#detailContractPopup .person .img_profile {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-top: 4px;
+}
+
+#detailContractPopup .person .nickname {
+    vertical-align: -webkit-baseline-middle;
+    margin-left: 10px;
+}
+
+#detailContractPopup .btn_handle_contract {
+	padding: 6px 10px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    transition: .2ms;
+	background-color:#1f2b43;
+	cursor: pointer;
+   	font: 600 15px 'Noto Sans KR', sans-serif;
+   	margin-top: 10px;
+   	float: right;
+   	margin-left: 5px;
+}
+
+#detailContractPopup .btn_handle_contract:active {
+	background-color:#3f475a;
+}
+
+#detailContractPopup #acceptBtn {
+    left: 260px;
+}
+
+#detailContractPopup #rejectBtn {
+    left: 320px;
+}
+
+#detailContractPopup #area {
+	line-height: 60px;
+}
+
+#detailContractPopup dt.info.price {
+		height: 80px;
+		line-height: 80px;
+}
+
+#detailContractPopup #price div:nth-child(1) {
+	font-size: 20px;
+	height: 40px;
+	line-height: 55px;
+}
+
+#detailContractPopup #price div:nth-child(2) {
+	font-size: 15px;
+	height: 40px;
+}
+
+#detailContractPopup .person, 
+#detailContractPopup #area {
+	height: 60px;
+}
+
+#detailContractPopup dl dd.person span,
+#detailContractPopup dl dd#area span {
+	position: static;
+}
+
+#detailContractPopup #schedule {
+	font-size: 14px;
+    min-height: 20px;
+}
+#detailContractPopup #content {
+	font-size: 15px;
+	min-height: 60px;
+	padding: 0 0 0 50px;
+	
+	display: table;
+}
+#detailContractPopup #content div {
+	display: table-cell;
+	vertical-align: middle;
+	
+	/*
+		div안에 여러 줄을 세로로 가운데 정렬하기
+		1. text자체를 감싸는 div로 만들고
+		2. 부모div에 display: table;
+		3. 아까 감싼 div에 display: table-cell, vertical-align: middle;
+	*/
+}

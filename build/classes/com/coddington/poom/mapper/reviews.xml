@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="reviews">
+
+	<select id="selectOne" parameterType="int" resultType="Review">
+		SELECT no, user_no userNo, service_no serviceNo, content, reply, regdate
+		FROM reviews
+		WHERE no = #{no}
+	</select>
+	<select id="selectList" parameterType="Map" resultType="Review">
+	
+ 		SELECT no, userNo, serviceNo, content, reply, regdate, userNickName, userPhotoUrl
+        FROM(SELECT no, userNo, serviceNo, content, reply, regdate, userNickName, userPhotoUrl, rownum r
+            FROM(SELECT r.no,r.user_no userNo, r.service_no serviceNo, r.content, r.reply, r.regdate, u.nick_name userNickName, u.photo_url userPhotoUrl
+                FROM reviews r, users u
+                WHERE r.user_no = u.no 
+                AND r.service_no = #{serviceNo}
+                ORDER BY r.regdate DESC))
+        WHERE r BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="selectCountTotal" parameterType="int" resultType="int">
+		SELECT count(no)
+		FROM reviews
+		WHERE service_no = #{serviceNo}
+		
+	</select>
+	
+	<update id="update" parameterType="Question">
+		UPDATE reviews SET content = #{content}, reply = #{reply}
+		WHERE no=#{no}		
+	</update>
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO reviews(no, user_no, service_no, content, regdate)
+		VALUES(reviews_seq.nextval, #{userNo}, #{serviceNo}, #{content}, SYSTIMESTAMP)
+	</insert>
+	
+</mapper>
