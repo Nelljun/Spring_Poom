@@ -50,8 +50,8 @@
 <img alt="dashboard_block_result" src="https://raw.githubusercontent.com/Nelljun/Spring_Poom/master/Images%20for%20readme/dashboard_block_result.png" width="400">
 
 - 마크업 및 CSS
-- (찜) 찜 버튼 클릭 시 해당 페이지에서 서비스 카드 삭제
-- (차단) x 버튼 클릭 시 해당 페이지에서 유저 삭제
+- (찜) 찜 버튼 클릭 시 해당 페이지에서 서비스 카드 삭제 (front에서만)
+- (차단) x 버튼 클릭 시 해당 페이지에서 유저 삭제 (front에서만)
 
 ##### 대시보드 - 계약
 
@@ -64,5 +64,27 @@
 - 수락/거절 팝업창 on/off, 계약 진행 내역 팝업창 on/off
 
 
+#### 백엔드
 
+##### 서비스 카드
 
+- 서비스 상세 정보 가공해서 해당 서비스 카드에 띄우기
+
+##### 대시보드 - 찜
+
+- 찜한 서비스 불러와서 서비스 카드 띄우기(ajax, underscore.js)
+- 찜 해제 시 찜 목록에서 삭제(ajax)
+
+##### 대시보드 - 차단
+
+- 차단한 유저 목록 불러와서 유저 정보 띄우기(ajax, underscore.js)
+- 차단 해제 시 차단 목록에서 삭제(ajax)
+
+##### 대시보드 - 계약
+
+- 대기/진행/완료 탭에 맞는 서비스를 불러와서 서비스 카드 띄우기(ajax, underscore.js)
+- 서비스 카드의 계약목록 클릭 시 해당 서비스의 계약 목록 불러와서 각 탭(대기/진행/완료)에 맞는 
+  template으로 계약 목록 띄우기(ajax)
+- 계약 수락/거절(ajax)
+- 상세버튼 클릭 시 해당 계약 정보 불러와서 팝업창에 띄우기(ajax)
+- 계약 완료 시 평점 및 리뷰 등록(ajax)
