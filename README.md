@@ -20,7 +20,7 @@
 
 ##### 상세페이지
 
-<img alt="details_result" src="https://raw.githubusercontent.com/Nelljun/Spring_Poom/master/Images%20for%20readme/details_result1.png" width="400"> <img alt="details" src="https://raw.githubusercontent.com/Nelljun/Spring_Poom/master/Images%20for%20readme/details.png" width="400">
+<img alt="details_main" src="https://raw.githubusercontent.com/Nelljun/Spring_Poom/master/Images%20for%20readme/details_main.png" width="400"><img alt="details_main_result" src="https://raw.githubusercontent.com/Nelljun/Spring_Poom/master/Images%20for%20readme/details_main_result.png" width="400">
 ********
 <img alt="details_review_popup" src="https://raw.githubusercontent.com/Nelljun/Spring_Poom/master/Images%20for%20readme/details_review_reply_popup.png" width="400"><img alt="details_review_popup_result" src="https://raw.githubusercontent.com/Nelljun/Spring_Poom/master/Images%20for%20readme/details_review_reply_popup_result.PNG" width="400">
 
