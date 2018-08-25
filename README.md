@@ -12,6 +12,10 @@
 - Language/Skills : HTML, CSS, Javascript, Java
 - DB : MyBatis, Oracle
 
+#### 참여인원 : 5명 
+#### 담당업무 : 조장으로서 기획 및 개발 전반
+#### 개발기간 : 2개월 
+
 ********
 
 ### 맡은 부분
